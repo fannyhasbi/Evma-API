@@ -2,7 +2,7 @@
 
 // Helper for Controller Loader
 
-class EvmaController {
+class Evma {
   private static $controller_folder = APP_PATH.'/controllers/';
   private static $file_extension = '.php';
 

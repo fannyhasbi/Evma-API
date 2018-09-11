@@ -26,7 +26,7 @@ class Response {
     }
   }
 
-  public static function sendResponse($halt){
+  private static function sendResponse($halt){
     Flight::json([
       'code'    => self::$code,
       'message' => self::$message,
