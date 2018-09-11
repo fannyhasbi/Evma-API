@@ -6,18 +6,20 @@ class Response {
   private static $code;
   private static $message;
   private static $data;
+  private static $halt = false;
 
-  private static function sendResponse($halt){
+  private static function sendResponse(){
     Flight::json([
       'code'    => self::$code,
       'message' => self::$message,
       'data'    => self::$data
     ]);
+
+    if(self::$halt)
+      die();
   }
 
   public static function send($code, $data = null, $halt = false){
-    require_once __DIR__.'/StatusCodes.php';
-
     if(is_array($code)){
       if(count($code) == 2){
         self::$message = $code[1];
@@ -28,12 +30,15 @@ class Response {
       }
     }
 
+    require_once __DIR__.'/StatusCodes.php';
     $status = new StatusCodes();
+
     if($status->check((int) $code)){
       self::$code = (int) $code;
       self::$message = self::$message != null ? self::$message : $status->getMessage();
       self::$data = $data;
-      self::sendResponse($halt);
+      self::$halt = $halt;
+      self::sendResponse();
     }
     else {
       Flight::json([
