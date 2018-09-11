@@ -7,7 +7,15 @@ class Response {
   private static $message;
   private static $data;
 
-  public static function send($code, $data, $halt = false){
+  private static function sendResponse($halt){
+    Flight::json([
+      'code'    => self::$code,
+      'message' => self::$message,
+      'data'    => self::$data
+    ]);
+  }
+
+  public static function send($code, $data = null, $halt = false){
     require_once __DIR__.'/StatusCodes.php';
 
     if(is_array($code)){
@@ -34,15 +42,5 @@ class Response {
       ]);
       die();
     }
-  }
-
-  private static function sendResponse($halt){
-    Flight::json([
-      'code'    => self::$code,
-      'message' => self::$message,
-      'data'    => self::$data
-    ]);
-
-    
   }
 }
