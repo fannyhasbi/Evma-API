@@ -2,9 +2,8 @@
 
 class Home {
   public function getHome(){
-    Flight::json([
-      'code' => 200,
-      'message' => 'OK'
-    ]);
+    Response::send(200,
+      'Welcome to Evma API!'
+    );
   }
 }
