@@ -1,5 +1,5 @@
 <?php
 
-Flight::route('GET /', function(){
-  echo 'Hahaha';
-});
+$home = EvmaController::handle('home');
+
+Flight::route('GET /', [$home, 'getHome']);
