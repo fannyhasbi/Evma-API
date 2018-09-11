@@ -10,10 +10,15 @@ class Response {
   public static function send($code, $data, $halt = false){
     require_once __DIR__.'/StatusCodes.php';
 
+    if(is_array($code)){
+      self::$message = $code[1];
+      $code = $code[0];
+    }
+
     $status = new StatusCodes();
     if($status->check((int) $code)){
       self::$code = (int) $code;
-      self::$message = $status->getMessage();
+      self::$message = self::$message != null ? self::$message : $status->getMessage();
       self::$data = $data;
       self::sendResponse($halt);
     }
