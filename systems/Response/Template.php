@@ -11,8 +11,13 @@ class Response {
     require_once __DIR__.'/StatusCodes.php';
 
     if(is_array($code)){
-      self::$message = $code[1];
-      $code = $code[0];
+      if(count($code) == 2){
+        self::$message = $code[1];
+        $code = $code[0];
+      }
+      else {
+        die('Fatal error : Array must contain only 2 values: [code, message]');
+      }
     }
 
     $status = new StatusCodes();
